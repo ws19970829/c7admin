@@ -17,4 +17,9 @@ class GradeServices
           return $data;
     }
 
+    public function name($level,Request $request){
+ $data = User::where('vip_level',$level)->get(['real_name','account']);
+ return $data;
+    }
+
 }

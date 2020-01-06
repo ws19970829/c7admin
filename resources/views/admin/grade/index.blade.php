@@ -28,14 +28,16 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($data as $k=>$v)
+            @foreach($data as $k=>$item)
                 <tr class="text-c">
-                    <td>{{$v->vip_level}}</td>
-                    <td>{{$v->num}}</td>
-                    <td><a href="{{ route('admin.user.index',$data) }}"  class="btn btn-primary radius">
-                            点击查看</a>
-                    </td>
+                    <td>{{$item->vip_level}}</td>
+                    <td>{{$item->num}}</td>
+                    <td>
+                        <a href=" {{route('admin.grade.user',['id'=>$item->vip_level])}} ">
+                            点击查看
+                        </a>
 
+                    </td>
                 </tr>
 
             @endforeach
@@ -43,7 +45,7 @@
             </tbody>
         </table>
         <div>
-            {{ $data->links()}}
+            {{ $data->appends(request()->except('page'))->links()}}
         </div>
     </div>
 @endsection
@@ -53,18 +55,7 @@
     <script type="text/javascript" src="{{staticAdmin()}}lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{staticAdmin()}}lib/laypage/1.2/laypage.js"></script>
     <script>
-        /*
-      参数解释：
-      title	标题
-      url		请求的url
-      id		需要操作的数据id
-      w		弹出层宽度（缺省调默认值）
-      h		弹出层高度（缺省调默认值）
-  */
-        /*管理员-增加*/
-        function admin_add(title,url,w,h){
-            layer_show(title,url,w,h);
-        }
+
     </script>
 @endsection
 

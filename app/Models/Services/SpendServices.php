@@ -71,7 +71,9 @@ public function time($request){
         if(count($truetime2)<=$pagesize){
             $jj=count($truetime2);
         }
-
+        if($j+$jj>=count($truetime2)){
+            $jj=count($truetime2);
+        }
 //        return [$j,$jj];
         for ($i=$j;$i<$jj;$i++){
 

@@ -28,8 +28,10 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
 
         //平台
         //实时数据
+        Route::get('grade/user/{id}','GradeController@user')->name('grade.user');
         Route::resource('spend','SpendController');
         //等级统计
+
         Route::resource('grade','GradeController');
         //下载统计
         Route::get('download/gamedownload','DownloadController@gameDown')->name('download.gamedownload');

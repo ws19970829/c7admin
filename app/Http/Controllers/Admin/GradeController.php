@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class GradeController extends BaseController
 {
@@ -16,7 +17,13 @@ class GradeController extends BaseController
 //      dd($data);
         return view('admin.Grade.index',compact('data'));
     }
+    public function user($level,Request $request){
 
+        $grade = new GradeServices();
+        $data = $grade->name($level,$request);
+//        dd($data);
+       return view('admin.grade.name',compact('data'));
+}
 //    public function index()
 //    {
 //        //

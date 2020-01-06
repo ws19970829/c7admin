@@ -65,21 +65,20 @@
                     ret.st = $.trim($('#st').val());
                     ret.et = $.trim($('#et').val())
                 }
+
             },
+       
             columns:[
                 {data:'time',className:'text-c'},
                 {data:'sum',className:'text-c'},
-                {data:'',defaultContent:'点击查看',className:'text-c btn-primary'},
+                {data:'',defaultContent:'点击查看',className:'text-c  label-secondary radius '},
 
             ],
         });
         function searchBtn(){
             datatable.api().ajax.reload();
         }
-        $('#mainTable tbody').on('click','tr td:last', function (e) {
-            alert(1)
 
-        } );
 
     </script>
 @endsection

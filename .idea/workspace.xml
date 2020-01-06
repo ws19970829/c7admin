@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6816007-a0e1-4dc0-957d-8faf3097d756" name="默认的" comment="" />
+    <list default="true" id="c6816007-a0e1-4dc0-957d-8faf3097d756" name="默认的" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/GradeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/GradeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Services/DownloadServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Services/DownloadServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Services/GradeServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Services/GradeServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Services/SpendServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Services/SpendServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/download/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/download/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/grade/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/grade/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin/route.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin/route.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +23,9 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -116,9 +129,11 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1VmhuWPzC1TEi0L3daoS0vgx5no" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Models/Services" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/grade" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -131,6 +146,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\c7admin\resources\views\admin\grade" />
       <recent name="F:\c7admin\app\Models\Services" />
       <recent name="E:\c7admin\app\Models\Services" />
       <recent name="E:\mu\c7admin\resources\views\admin\admin" />
@@ -177,7 +193,7 @@
       <workItem from="1578196245801" duration="3362000" />
       <workItem from="1578201122323" duration="46032000" />
       <workItem from="1578250887010" duration="6000" />
-      <workItem from="1578313734834" duration="869000" />
+      <workItem from="1578313734834" duration="12230000" />
     </task>
     <servers />
   </component>
@@ -192,5 +208,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
