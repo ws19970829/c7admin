@@ -67,14 +67,48 @@
                 }
 
             },
-       
+
             columns:[
                 {data:'time',className:'text-c'},
                 {data:'sum',className:'text-c'},
-                {data:'',defaultContent:'点击查看',className:'text-c  label-secondary radius '},
+                // {data:null,defaultContent:'点击查看',className:'text-c'}
+                {data:'game',"render": function(data, type, row) {
+                        var html = ` <a href="javascript:;" onclick="show()" class="btn btn-primary radius">点击查看</a>`
+                        return html;
+                    },className:'text-c' }
+
 
             ],
         });
+        function show(){
+
+                layer.open({
+                    type: 2,//类型为2，解析URL
+                    title:'查看下载',//标题
+                    maxmin:true,
+                    area: ['500px', '300px'],//弹出框大小
+                    shadeClose: true, //点击遮罩关闭
+                    content:"{{route('admin.download.gamedownload')}}", //请求的URL
+                    success:function(){
+
+                    }
+                });
+
+        }
+        {{--$('#example tbody').on('click','tr td:nth-child(3)', function (e) {--}}
+        {{--    // console.log(e);--}}
+        {{--    var time = $(this).parent().children(':first').html();--}}
+        {{--    // alert(time);--}}
+        {{--     $.ajax({--}}
+        {{--         url:"{{route('admin.download.gamedownload')}}",--}}
+        {{--         type:'GET',--}}
+        {{--         data:{--}}
+        {{--            time,--}}
+        {{--         }--}}
+        {{--     }).then(ret=>{--}}
+        {{--         console.log(ret)--}}
+        {{--     })--}}
+        {{--} );--}}
         function searchBtn(){
             datatable.api().ajax.reload();
         }

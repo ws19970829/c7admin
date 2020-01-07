@@ -63,6 +63,9 @@
             @endforeach
             </tbody>
         </table>
+        <div>
+            {{--{{ $data->appends(request()->except('page'))->links()}}--}}
+        </div>
     </div>
 @endsection
 

@@ -15,9 +15,29 @@
                 <i class="Hui-iconfont" >&#xe665;</i> 搜索
             </button>
         </div>
-        <div class="cl pd-5 bg-1 bk-gray mt-20">
-
+        <div>
+            <div class="select-box" style="width:150px;">
+                <select name="" class="select" size="1" id="company_name">
+                    <option >选择公司</option>
+                    @foreach($companys as $v)
+                        <option value="{{$v}}" name="company_name" >{{$v}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="select-box" style="width:150px;" >
+                <select name="" class="select" size="1" id="name">
+                    <option >选择游戏</option>
+                    @foreach($names as $v)
+                        <option value="" name="name" >{{$v}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button name="" id="" class="btn btn-success" type="button" onclick="mu()">
+                <i class="Hui-iconfont" >&#xe665;</i> 加载
+            </button>
         </div>
+
+
         <div class="mt-20">
             <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                 <thead>
@@ -58,10 +78,16 @@
     <script>
 
 
+    </script>
+
+
+    <script>
+
+
         const datatable=  $('.table-sort').dataTable({
             //页码修改
             lengthMenu:[10,20,30,50,100],
-            //指定不排序
+            // 指定不排序
             columnDefs:[
                 {targets:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,],orderable:false}
             ],
@@ -78,7 +104,9 @@
                 type:'GET',
                 data:function(ret){
                     ret.st = $.trim($('#st').val());
-                    ret.et = $.trim($('#et').val())
+                    ret.et = $.trim($('#et').val());
+                    ret.company_name = $.trim($('#company_name').find("option:selected").html());
+                    ret.name = $.trim($('#name').find("option:selected").html());
                 }
             },
             columns:[
@@ -103,6 +131,29 @@
         function searchBtn(){
             datatable.api().ajax.reload();
         }
+        function mu(){
+            datatable.api().ajax.reload();
+        }
+        $('#company_name').change(function () {
+            var company = $(this).val();
+            $.ajax({
+                url: "{{route('admin.spend.gamename')}}",
+                data:{
+                    company,
+                }
+            }).then(ret=>{
+                let html = '';
+                var data =ret['data'];
+                data = ['请选择游戏',...data];
+                data.forEach(item=>{
+                    html += `<option value="">${item}</option>`
+                });
+                $('#name').html(html);
+
+            });
+
+
+        });
 
     </script>
 

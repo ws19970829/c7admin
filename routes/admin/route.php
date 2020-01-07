@@ -36,9 +36,17 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
         //下载统计
         Route::get('download/gamedownload','DownloadController@gameDown')->name('download.gamedownload');
         Route::resource('download','DownloadController');
+        //小游戏统计
 
+        Route::get('Spend/gamename','SpendController@gamename')->name('spend.gamename');
+        Route::get('Spend/game','SpendController@game')->name('spend.game');
 
         //玩家=>用户
+        //玩家充值列表
+        Route::get('user/charge','UserController@userCharge')->name('user.charge');
+        //玩家订单列表
+        Route::get('user/order','UserController@userOrder')->name('user.order');
+        //玩家列表
         Route::resource('user','UserController');
 
 

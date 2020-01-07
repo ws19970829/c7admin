@@ -34,12 +34,14 @@
 
             <table class="table table-border table-bordered table-bg">
                 <thead>
-
+                <tr>
+                    <th scope="col" colspan="11">玩家列表</th>
+                </tr>
                 <tr class="text-c">
                     <th width="25"><input type="checkbox" name="" value=""></th>
-                    <th width="100">玩家账号</th>
+                    <th width="80">玩家账号</th>
                     <th width="100">平台ID</th>
-                    <th width="100">充值金额</th>
+                    <th width="80">充值金额</th>
                     <th width="100">平台币余额</th>
                     <th width="100">现金余额</th>
                     <th width="100">账号状态</th>
@@ -71,10 +73,12 @@
 
                     </td>
                     <td>1</td>
+
                     <td>
-                       @if($item->anti_addiction==0) 未认证
-                        @else 已认证
-                    @endif
+                       @if($item->anti_addiction==0)<a class="label label-warning radius" >未认证</a>   @endif
+
+                        @if($item->anti_addiction==1) <a class="label label-secondary radius" >已认证</a> @endif
+
                     <td>{{$item->register_way}}</td>
                     <td>
                             @if( $item->register_type==0 )游客 @endif

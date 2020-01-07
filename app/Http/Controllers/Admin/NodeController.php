@@ -20,8 +20,9 @@ class NodeController extends BaseController
         $ss = $request->get('ss');
         $data = Node::when('ss',function($query)use($ss){
             $query->where('name','like',"%{$ss}%");
-        })->paginate($this->pagesize)->toArray();
-        $data=treeLevel($data['data']);
+        })->get();
+        $data=$data->toArray();
+        $data=treeLevel($data);
 //        dd($data);
         return view('admin.node.index',compact('data'));
     }
