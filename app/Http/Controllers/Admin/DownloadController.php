@@ -11,10 +11,10 @@ class DownloadController extends BaseController
 {
     public function index(Request $request)
     {
-//        $download = new DownloadServices();
-//        $down = $download->time($request);
-////          dd($down);
-//        $data = $download->getData($request, 10);
+        $download = new DownloadServices();
+        $down = $download->time($request);
+//          dd($down);
+        $data = $download->getData($request, 10);
 //        dd($data);
 ////
         //        判断是否是ajax请求
@@ -41,7 +41,7 @@ class DownloadController extends BaseController
                 'data' => $data
             ];
         }
-        return view('admin.download.index');
+        return view('admin.download.index',compact('data'));
     }
 
 //    public function index()
@@ -71,10 +71,10 @@ class DownloadController extends BaseController
 //        return view('admin.download.index',compact('newData'));
 //    }
 
-//    public function gameDown(Request $request){
-////        dd($request);
-//        return view('admin.download.gamedownload');
-//    }
+    public function gameDown(Request $request){
+  dd($request);
+        return view('admin.download.gamedownload');
+    }
 
 
 }

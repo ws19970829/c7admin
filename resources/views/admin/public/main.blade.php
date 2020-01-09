@@ -12,7 +12,7 @@
     <title>我的桌面</title>
     @yield('css')
 </head>
-<body>
+<body id="example">
 @yield('cnt')
 <script type="text/javascript" src="{{ staticAdmin() }}lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ staticAdmin() }}lib/layer/2.4/layer.js"></script>

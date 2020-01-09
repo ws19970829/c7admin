@@ -92,13 +92,13 @@ public function time($request){
             })->whereBetween('create_time',[$beginToday,$endToday])
                 ->select('id','dow_num','game_name')
                 ->orderBy('create_time','desc')
-                ->paginate($pagesize);
+                ->get();
              $sum = $game->count();
             $arr=$game->toArray();
             $data[] = [
                 'time'=> date('Y-m-d',$beginToday),
                 'sum'=>$sum,
-                'game'=>$arr['data'],
+//                'game'=>$arr['data'],
             ];
 
         }

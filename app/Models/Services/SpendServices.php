@@ -103,7 +103,11 @@ public function time($request){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('pay_time',[$st,$et]);
-            })->where('pay_time','<',$beginToday)->where('sdk_version',1)->orderBy('pay_time','desc')->select('pay_time','pay_amount')->paginate($pagesize);
+            })->where('pay_time','<',$beginToday)
+                ->where('sdk_version',1)
+                ->orderBy('pay_time','desc')
+                ->select('pay_time','pay_amount')
+                ->paginate($pagesize);
             $And_old_pay= $And_old_pay->sum('pay_amount');
 //        return $And_old_pay;
 
