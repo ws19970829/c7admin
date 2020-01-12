@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c6816007-a0e1-4dc0-957d-8faf3097d756" name="默认的" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/DownloadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DownloadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Services/DownloadServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Services/DownloadServices.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Services/SpendServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Services/SpendServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/public/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/public/main.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,7 +192,9 @@
       <workItem from="1578400026834" duration="149000" />
       <workItem from="1578400176370" duration="16425000" />
       <workItem from="1578574692460" duration="74000" />
-      <workItem from="1578580870022" duration="5039000" />
+      <workItem from="1578580870022" duration="5059000" />
+      <workItem from="1578818524046" duration="1710000" />
+      <workItem from="1578822785314" duration="3230000" />
     </task>
     <servers />
   </component>
@@ -237,5 +236,29 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Models/Services/SpendServices.php</url>
+          <line>14</line>
+          <properties>
+            <option name="className" value="\App\Models\Services\SpendServices" />
+            <option name="methodName" value="time" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Models/Services/DownloadServices.php</url>
+          <line>11</line>
+          <properties>
+            <option name="className" value="\App\Models\Services\DownloadServices" />
+            <option name="methodName" value="time" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

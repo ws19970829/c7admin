@@ -10,7 +10,7 @@ use function GuzzleHttp\Psr7\str;
 
 
 class SpendServices {
-public static $time = [];
+
 
 public function time($request){
 
@@ -94,21 +94,16 @@ public function time($request){
                 $query->whereBetween('pay_time',[$st,$et]);
             })->whereBetween('pay_time',[$beginToday,$endToday])
                 ->where('sdk_version',1)
-                ->orderBy('pay_time','desc')
-                ->select('pay_time','pay_amount')
-                ->paginate($pagesize);
-            $And_new_pay= $And_new_pay->sum('pay_amount');
+                ->sum('pay_amount');
             //安卓老用户充值
             $And_old_pay=Spend::when($st,function ($query)use($st,$et,$time,$beginToday){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('pay_time',[$st,$et]);
-            })->where('pay_time','<',$beginToday)
+            })->where('pay_time','<',$endToday)
                 ->where('sdk_version',1)
-                ->orderBy('pay_time','desc')
-                ->select('pay_time','pay_amount')
-                ->paginate($pagesize);
-            $And_old_pay= $And_old_pay->sum('pay_amount');
+                ->sum('pay_amount');
+            $And_old_pay= $And_old_pay-$And_new_pay;
 //        return $And_old_pay;
 
 
@@ -117,17 +112,19 @@ public function time($request){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('pay_time',[$st,$et]);
-            })->whereBetween('pay_time',[$beginToday,$endToday])->where('sdk_version',2)->orderBy('pay_time','desc')->select('pay_time','pay_amount')->paginate($pagesize);
-//          return $data;
-            $Ios_new_pay=$Ios_new_pay->sum('pay_amount');
-
-            //苹果老用户充值
+            })->whereBetween('pay_time',[$beginToday,$endToday])
+                ->where('sdk_version',2)
+                ->sum('pay_amount');
+//          return $Ios_new_pay;
+             //苹果老用户充值
             $Ios_old_pay=Spend::when($st,function ($query)use($st,$et,$time,$beginToday){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('pay_time',[$st,$et]);
-            })->where('pay_time','<',$beginToday)->where('sdk_version',2)->orderBy('pay_time','desc')->select('pay_time','pay_amount')->paginate($pagesize);
-            $Ios_old_pay= $Ios_old_pay->sum('pay_amount');
+            })->where('pay_time','<',$endToday)
+                ->where('sdk_version',2)
+                ->sum('pay_amount');
+            $Ios_old_pay= $Ios_old_pay-$Ios_new_pay;
 
             $sum_pay = $And_new_pay+$And_old_pay+$Ios_new_pay+$Ios_old_pay;
 
@@ -140,28 +137,18 @@ public function time($request){
                 $query->whereBetween('login_time',[$st,$et]);
             })->whereBetween('login_time',[$beginToday,$endToday])
                 ->where('unique_id',$null)
-                ->select('login_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-                 $Ios_new_active = $Ios_new_active->count();
+                ->count('id');
+//            return $Ios_new_active;
+
             //苹果老活跃度
             $Ios_old_active=User::when($st,function ($query)use($st,$et,$time){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('login_time',[$st,$et]);
-            })->where('login_time','<',$beginToday)
+            })->where('login_time','<',$endToday)
                 ->where('unique_id',$null)
-                ->select('login_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-            $Ios_old_active = $Ios_old_active->count();
-
+                ->count('id');
+            $Ios_old_active=$Ios_old_active-$Ios_new_active;
                  //安卓活跃值
             $And_new_active=User::when($st,function ($query)use($st,$et,$time){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
@@ -169,27 +156,17 @@ public function time($request){
                 $query->whereBetween('login_time',[$st,$et]);
             })->whereBetween('login_time',[$beginToday,$endToday])
                 ->where('unique_id','!=',$null)
-                ->select('login_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-            $And_new_active = $And_new_active->count();
+                ->count('id');
             //安卓老活跃度
             $And_old_active=User::when($st,function ($query)use($st,$et,$time){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('login_time',[$st,$et]);
-            })->where('login_time','<',$beginToday)
+            })->where('login_time','<',$endToday)
                 ->where('unique_id','!=',$null)
-                ->select('login_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time','desc')
-                ->paginate($pagesize);
+                ->count('id');
 //          return $data;
-            $And_old_active = $And_old_active->count();
+            $And_old_active = $And_old_active-$And_new_active;
 
             $sum_active = $Ios_new_active+$Ios_old_active+$And_new_active+$And_old_active;
 
@@ -201,27 +178,18 @@ public function time($request){
                 $query->whereBetween('register_time',[$st,$et]);
             })->whereBetween('register_time',[$beginToday,$endToday])
                 ->where('unique_id',$null)
-                ->select('register_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time','desc')
-                ->paginate($pagesize);
+                ->count('id');
 //          return $data;
-            $Ios_new_reg = $Ios_new_reg->count();
+
             //苹果老注册
             $Ios_old_reg=User::when($st,function ($query)use($st,$et,$time){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('register_time',[$st,$et]);
-            })->where('register_time','<',$beginToday)
+            })->where('register_time','<',$endToday)
                 ->where('unique_id',$null)
-                ->select('register_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-            $Ios_old_reg = $Ios_old_reg->count();
+                ->count('id');
+            $Ios_old_reg=$Ios_old_reg-$Ios_new_reg;
 
             //安卓注册值
             $And_new_reg=User::when($st,function ($query)use($st,$et,$time){
@@ -230,28 +198,18 @@ public function time($request){
                 $query->whereBetween('register_time',[$st,$et]);
             })->whereBetween('register_time',[$beginToday,$endToday])
                 ->where('unique_id','!=',$null)
-                ->select('register_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-            $And_new_reg = $And_new_reg->count();
+                ->count('id');
+
             //安卓老注册度
             $And_old_reg=User::when($st,function ($query)use($st,$et,$time){
                 $st=strtotime(date('Y-m-d 00:00:00',strtotime($st)));
                 $et=strtotime(date('Y-m-d 23:59:59',strtotime($et)));
                 $query->whereBetween('register_time',[$st,$et]);
-            })->where('register_time','<',$beginToday)
+            })->where('register_time','<',$endToday)
                 ->where('unique_id','!=',$null)
-                ->select('register_time','id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time','desc')
-                ->paginate($pagesize);
-//          return $data;
-            $And_old_reg = $And_old_reg->count();
+                ->count('id');
 
+            $And_old_reg = $And_old_reg-$And_new_reg;
             $sum_reg = $Ios_new_reg+$Ios_old_reg+$And_new_reg+$And_old_reg;
 
 
@@ -335,10 +293,9 @@ public function time($request){
                 $query->where('game_name', $name);
             })->whereBetween('pay_time', [$beginToday, $endToday])
                 ->where('sdk_version', 1)
-                ->select(['pay_amount'])
-                ->paginate($pagesize);
+                ->sum('pay_amount');
 
-            $And_new_pay = $And_new_pay->sum('pay_amount');
+
 //        return $Ios_new_pay;
 
             //安卓老活跃度
@@ -350,12 +307,11 @@ public function time($request){
                 $query->whereIn('game_name', $data_name);
             })->when($name, function ($query) use ($name) {
                 $query->where('game_name', $name);
-            })->where('pay_time', '<', $beginToday)
+            })->where('pay_time', '<', $endToday)
                 ->where('sdk_version', 1)
-                ->select(['pay_amount'])
-                ->paginate($pagesize);
+                ->sum('pay_amount');;
 //        return $game;
-            $And_old_pay = $And_old_pay->sum('pay_amount');
+            $And_old_pay = $And_old_pay-$And_new_pay;
 
 //        return $And_old_pay;
 
@@ -370,9 +326,8 @@ public function time($request){
                 $query->where('game_name', $name);
             })->whereBetween('pay_time', [$beginToday, $endToday])
                 ->where('sdk_version', 2)
-                ->select(['pay_amount'])
-                ->paginate($pagesize);
-            $Ios_new_pay = $Ios_new_pay->sum('pay_amount');
+                ->sum('pay_amount');
+
 //     return $Ios_new_pay;
 
             //苹果老活跃度
@@ -384,11 +339,10 @@ public function time($request){
                 $query->whereIn('game_name', $data_name);
             })->when($name, function ($query) use ($name) {
                 $query->where('game_name', $name);
-            })->where('pay_time', '<', $beginToday)
+            })->where('pay_time', '<', $endToday)
                 ->where('sdk_version', 2)
-                ->select(['pay_amount'])
-                ->paginate($pagesize);
-            $Ios_old_pay = $Ios_old_pay->sum('pay_amount');
+                ->sum('pay_amount');
+            $Ios_old_pay = $Ios_old_pay-$Ios_new_pay;
 //        return $Ios_old_pay;
 
 
@@ -412,10 +366,8 @@ public function time($request){
                 $query->whereIn('id', $user_id);
             })->whereBetween('login_time', [$beginToday, $endToday])
                 ->where('unique_id', $null)
-                ->select('login_time', 'id')
-                ->orderBy('login_time', 'desc')
-                ->paginate($pagesize);
-            $Ios_new_active = $Ios_new_active->count();
+                ->count('id');
+
 
 
             //苹果老活跃度
@@ -429,15 +381,11 @@ public function time($request){
             })->when($name, function ($query) use ($name) {
                 $user_id = Spend::where('game_name', $name)->groupBy('user_id')->pluck('user_id')->toArray();
                 $query->whereIn('id', $user_id);
-            })->where('login_time', '<', $beginToday)
+            })->where('login_time', '<', $endToday)
                 ->where('unique_id', $null)
-                ->select('login_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time', 'desc')
-                ->paginate($pagesize);
+               ->count('id');
 //          return $data;
-            $Ios_old_active = $Ios_old_active->count();
+            $Ios_old_active = $Ios_old_active-$Ios_new_active;
 //        return $Ios_old_active;
 
             //安卓活跃值
@@ -453,13 +401,8 @@ public function time($request){
                 $query->whereIn('id', $user_id);
             })->whereBetween('login_time', [$beginToday, $endToday])
                 ->where('unique_id', '!=', $null)
-                ->select('login_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time', 'desc')
-                ->paginate($pagesize);
-//          return $data;
-            $And_new_active = $And_new_active->count();
+                ->count('id');
+//
             //安卓老活跃度
             $And_old_active = User::when($st, function ($query) use ($st, $et) {
                 $st = strtotime(date('Y-m-d 00:00:00', strtotime($st)));
@@ -471,14 +414,10 @@ public function time($request){
             })->when($name, function ($query) use ($name) {
                 $user_id = Spend::where('game_name', $name)->groupBy('user_id')->pluck('user_id')->toArray();
                 $query->whereIn('id', $user_id);
-            })->where('login_time', '<', $beginToday)
+            })->where('login_time', '<', $endToday)
                 ->where('unique_id', '!=', $null)
-                ->select('login_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('login_time', 'desc')
-                ->paginate($pagesize);
-            $And_old_active = $And_old_active->count();
+                ->count('id');
+            $And_old_active = $And_old_active-$And_new_active;
 
             //苹果新注册
             $Ios_new_reg = User::when($st, function ($query) use ($st, $et) {
@@ -493,13 +432,9 @@ public function time($request){
                 $query->whereIn('id', $user_id);
             })->whereBetween('register_time', [$beginToday, $endToday])
                 ->where('unique_id', $null)
-                ->select('register_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time', 'desc')
-                ->paginate($pagesize);
+                ->count('id');
 //          return $data;
-            $Ios_new_reg = $Ios_new_reg->count();
+
             //苹果老注册
             $Ios_old_reg = User::when($st, function ($query) use ($st, $et) {
                 $st = strtotime(date('Y-m-d 00:00:00', strtotime($st)));
@@ -511,15 +446,11 @@ public function time($request){
             })->when($name, function ($query) use ($name) {
                 $user_id = Spend::where('game_name', $name)->groupBy('user_id')->pluck('user_id')->toArray();
                 $query->whereIn('id', $user_id);
-            })->where('register_time', '<', $beginToday)
+            })->where('register_time', '<', $endToday)
                 ->where('unique_id', $null)
-                ->select('register_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time', 'desc')
-                ->paginate($pagesize);
+                ->count('id');
 //          return $data;
-            $Ios_old_reg = $Ios_old_reg->count();
+            $Ios_old_reg = $Ios_old_reg-$Ios_new_reg;
 
             //安卓注册值
             $And_new_reg = User::when($st, function ($query) use ($st, $et) {
@@ -534,13 +465,9 @@ public function time($request){
                 $query->whereIn('id', $user_id);
             })->whereBetween('register_time', [$beginToday, $endToday])
                 ->where('unique_id', '!=', $null)
-                ->select('register_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time', 'desc')
-                ->paginate($pagesize);
+                ->count('id');
 //          return $data;
-            $And_new_reg = $And_new_reg->count();
+
             //安卓老注册度
             $And_old_reg = User::when($st, function ($query) use ($st, $et) {
                 $st = strtotime(date('Y-m-d 00:00:00', strtotime($st)));
@@ -552,14 +479,10 @@ public function time($request){
             })->when($name, function ($query) use ($name) {
                 $user_id = Spend::where('game_name', $name)->groupBy('user_id')->pluck('user_id')->toArray();
                 $query->whereIn('id', $user_id);
-            })->where('register_time', '<', $beginToday)
+            })->where('register_time', '<', $endToday)
                 ->where('unique_id', '!=', $null)
-                ->select('register_time', 'id')
-//                ->select([DB::raw('count(*) as num')])
-//                ->groupBy('login_time')
-                ->orderBy('register_time', 'desc')
-                ->paginate($pagesize);
-            $And_old_reg = $And_old_reg->count();
+                ->count('id');
+            $And_old_reg = $And_old_reg-$And_new_reg;
 
             $data[] = [
                 'time'=> date('Y-m-d',$beginToday),
