@@ -12,7 +12,7 @@
         "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.5",
-        "laravel/framework": "5.7.*",
+        "laravel/framework": "6.18.*",
         "laravel/tinker": "^1.0",
         "mews/captcha": "^3.0"
     },
